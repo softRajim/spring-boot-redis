@@ -4,6 +4,7 @@ import com.rajim.redis.domain.User;
 import com.rajim.redis.dto.UserDto;
 import com.rajim.redis.exception.EntityNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,4 +17,10 @@ public interface UserService {
     User updateUser(Long userId, UserDto userDto) throws Exception;
 
     User addNewUser(UserDto userDto);
+
+    void delete(Long id);
+
+    List<User> getAllUsers();
+
+    void clearCache();
 }

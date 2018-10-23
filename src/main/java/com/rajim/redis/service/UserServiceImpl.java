@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -52,5 +53,21 @@ public class UserServiceImpl implements UserService {
         user.setName(userDto.getName());
         user.setFollowers(userDto.getFollowers());
         return userRepository.save(user);
+    }
+
+    @Override
+    public void delete(Long id) {
+        log.info("Deleting user with id {}.", id);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        log.info("Fetching all users");
+        return userRepository.findAll();
+    }
+
+    @Override
+    public void clearCache() {
+        log.info("All list maintained cache is being cleared");
     }
 }

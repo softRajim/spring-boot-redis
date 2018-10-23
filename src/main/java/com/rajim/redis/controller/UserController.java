@@ -5,10 +5,12 @@ import com.rajim.redis.dto.UserDto;
 import com.rajim.redis.exception.EntityNotFoundException;
 import com.rajim.redis.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,6 +25,12 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @Cacheable(value = "users")
+    @GetMapping(value = "")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
 
@@ -43,6 +51,18 @@ public class UserController {
     @PostMapping("")
     public User addUser(@RequestBody UserDto userDto) {
         return userService.addNewUser(userDto);
+    }
+
+    @CacheEvict(value = "users", allEntries=true)
+    @DeleteMapping("/{id}")
+    public void deleteUserByID(@PathVariable Long id) {
+        userService.delete(id);
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
+    @PutMapping("/clear-cash")
+    public void clearCache() {
+        userService.clearCache();
     }
 
 }
