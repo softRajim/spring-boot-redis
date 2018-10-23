@@ -1,0 +1,25 @@
+spring:
+  jpa:
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+     ddl-auto: update
+     naming_strategy: com.esewa.cas.shared.CustomNamingStrategy
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+
+
+datasource:
+  redis-cache:
+    databaseDriverName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost/redis-cache
+    username: root
+    password: root
+
+server:
+  port: 6060
